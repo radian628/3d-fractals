@@ -1,0 +1,49 @@
+* {
+    font-family: Arial;
+}
+
+body {
+    overflow: hidden;
+}
+
+canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+}
+
+#ui {
+    background: #FFFFFF;
+    opacity: 0.5;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    z-index: 1;
+    padding: 10px;
+    transition: opacity, 0.3s;
+    max-width: 30%;
+    max-height: 90%;
+    overflow: auto;
+}
+
+.range-input {
+    width: 200px;
+}
+
+#ui:hover {
+    opacity: 1;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 18px;
+}
+
+h1, h2 {
+    margin: 0px;
+    margin-top: 15px;
+}

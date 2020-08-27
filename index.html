@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <canvas width="1920" height="1080" id="canvas"></canvas>
+
+        <div id="ui">
+            <h1>3D Fractal Generator/Explorer</h1>
+            <h2>Instructions</h2>
+            <p>Use WASD, Q, and space to move. Click the screen to enable rotation with the mouse, and press escape to exit rotation mode. Press I to take a screenshot.</p>
+            <h2>UI and Viewer Controls</h2>
+            <label>Hide UI when controlling viewer</label>
+            <input type="checkbox" id="ui-disappear">
+            <br>
+            <label>Player Speed</label>
+            <input type="range" min="-4" max="1" value="-2" id="player-speed" step="0.001" class="range-input">
+            <br>
+            <h2>Screenshot Controls</h2>
+            <label>Use size of current screen</label>
+            <input type="checkbox" id="use-current-screen-size" checked="true">
+            <br>
+            <label>Screenshot Raymarching Steps</label>
+            <input type="range" min="1" max="1024" value="512" id="screenshot-raymarching-steps" step="1" class="range-input">
+            <br>
+            <label>Screenshot Width (px)</label>
+            <input type="number" value="1920" id="screenshot-width" step="0.001" class="range-input">
+            <br>
+            <label>Screenshot Height (px)</label>
+            <input type="number" value="1080" id="screenshot-height" step="0.001" class="range-input">
+            <br>
+            <h2>Fractal Controls</h2>
+            <label>Fractal Rotation 0</label>
+            <input type="range" min="-1" max="1" value="0.39269908169872414" id="fractal-rotation-0" step="0.001" class="range-input">
+            <br>
+            <label>Fractal Rotation 1</label>
+            <input type="range" min="-1" max="1" value="0.39269908169872414" id="fractal-rotation-1" step="0.001" class="range-input">
+            <br>
+            <label>Fractal Rotation 2</label>
+            <input type="range" min="-1" max="1" value="0.39269908169872414" id="fractal-rotation-2" step="0.001" class="range-input">
+            <br>
+            <label>Fractal Scale Factor</label>
+            <input type="range" min="0" max="1.5" value="0.5" id="scale-factor" step="0.001" class="range-input">
+            <br>
+            <label>Fractal Iterations</label>
+            <input type="range" min="1" max="22" value="12" id="fractal-iterations" step="1" class="range-input">
+            <br>
+            <h2>Rendering Controls</h2>
+            <label>Fractal Color</label>
+            <input type="color" id="fractal-color" value="#404040">
+            <br>
+            <label>Shadow Brightess</label>
+            <input type="range" min="0" max="1" value="0.4" id="shadow-brightness" step="0.001" class="range-input">
+            <br>
+            <label>FOV</label>
+            <input type="range" min="0" max="4" value="1" id="fov" step="0.001" class="range-input">
+            <br>
+            <label>Raymarching Steps (High settings will cause lag!)</label>
+            <input type="range" min="1" max="512" value="64" id="raymarching-steps" step="1" class="range-input">
+            <br>
+            <label>Ray Hit Threshold</label>
+            <input type="range" min="-6" max="0" value="-4" id="ray-hit-threshold" step="0.001" class="range-input">
+            <br>
+            <label>Shader</label>
+            <select id="shader-choice">
+                <option value="fragment.glsl">fragment.glsl</option>
+                <option value="fire.glsl">fire.glsl</option>
+                <option value="infinite_tiling.glsl">infinite_tiling.glsl</option>
+                <option value="inverted.glsl">inverted.glsl</option>
+                <option value="cross_section.glsl">cross_section.glsl</option>
+            </select>
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
