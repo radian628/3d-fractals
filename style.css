@@ -14,7 +14,8 @@ canvas {
 }
 
 #ui {
-    background: #FFFFFF;
+    background: #000000;
+    color: white;
     opacity: 0.5;
     top: 0px;
     left: 0px;
@@ -28,7 +29,33 @@ canvas {
 }
 
 .range-input {
+    -webkit-appearance: none;
+    appearance: none;
     width: 200px;
+    background: #333333;
+    color: white;
+    border-radius: 8px;
+    border: none;
+}
+
+.range-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background: #AACCFF;
+    width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+}
+
+.range-input::-moz-range-thumb {
+    background: #AACCFF;
+    width: 15px;
+    height: 15px;
+    border-radius: 7.5px;
+}
+
+#ui label {
+    color: #CCCCCC;
 }
 
 #ui:hover {
