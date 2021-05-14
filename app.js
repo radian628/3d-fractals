@@ -129,6 +129,14 @@ function matMultiply(vec, mat) {
     ];
 }
 
+function matMultiplyMat(mat1, mat2) {
+    return [
+        dotProduct([mat1[0], mat1[1], mat1[2]], [mat2[0], mat2[3], mat2[6]]), dotProduct([mat1[0], mat1[1], mat1[2]], [mat2[1], mat2[4], mat2[7]]), dotProduct([mat1[0], mat1[1], mat1[2]], [mat2[2], mat2[5], mat2[8]]),
+        dotProduct([mat1[3], mat1[4], mat1[5]], [mat2[0], mat2[3], mat2[6]]), dotProduct([mat1[3], mat1[4], mat1[5]], [mat2[1], mat2[4], mat2[7]]), dotProduct([mat1[3], mat1[4], mat1[5]], [mat2[2], mat2[5], mat2[8]]),
+        dotProduct([mat1[6], mat1[7], mat1[8]], [mat2[0], mat2[3], mat2[6]]), dotProduct([mat1[6], mat1[7], mat1[8]], [mat2[1], mat2[4], mat2[7]]), dotProduct([mat1[6], mat1[7], mat1[8]], [mat2[2], mat2[5], mat2[8]]),
+    ]
+}
+
 function rotateX(angle) {
     return [
         1, 0, 0,
@@ -282,7 +290,7 @@ var uiParams = {
     raymarchingSteps: 64,
     shadowBrightness: 0.4,
     rayHitThreshold: 0.0001,
-    shaderChoice: "fragment.glsl"
+    shaderChoice: "fragment.frag"
 }
 
 function hex2rgb(hex) {
@@ -294,10 +302,12 @@ function hex2rgb(hex) {
 }
 
 async function recompileShader() {
-    var vertShader = (await request("vertex.glsl")).response;
-    var fragShader = (await request(uiParams.shaderChoice)).response;
-    fragShader = fragShader.replace("$fractalIterations", uiParams.fractalIterations + ".0");
-    fragShader = fragShader.replace("$raymarchingSteps", uiParams.raymarchingSteps);
+    var vertShader = (await request("shaders/vertex.vert")).response;
+    var fragShader = (await request("shaders/" + uiParams.shaderChoice)).response;
+    fragShader = fragShader.replace("#define ITERATIONS", "//");
+    fragShader = fragShader.replace("#define STEPS", "//");
+    fragShader = fragShader.replace(/ITERATIONS/g, uiParams.fractalIterations + ".0");
+    fragShader = fragShader.replace(/STEPS/g, uiParams.raymarchingSteps);
     prog = buildShaderProgram(vertShader, fragShader);
 }
 
@@ -407,6 +417,16 @@ async function drawLoop() {
     gl.uniform3fv(gl.getUniformLocation(prog, "uFractalColor"), uiParams.fractalColor);
     gl.uniform1f(gl.getUniformLocation(prog, "uShadowBrightness"), uiParams.shadowBrightness);
     gl.uniform1f(gl.getUniformLocation(prog, "uHitThreshold"), uiParams.rayHitThreshold);
+
+    gl.uniformMatrix3fv(gl.getUniformLocation(prog, "uIterationRotation"), false,
+        matMultiplyMat(
+            rotateZ(uiParams.fractalRotationParams[2]),
+            matMultiplyMat(
+                rotateX(uiParams.fractalRotationParams[0]),
+                rotateY(uiParams.fractalRotationParams[1])
+            )
+        )
+    );
     
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
     
